@@ -70,11 +70,11 @@
 <transmission name="${lr}_wheel_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="${lr}_wheel_joint">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
     <actuator name="${lr}_wheel_motor">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>10</mechanicalReduction>
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>50</mechanicalReduction>
     </actuator>
   </transmission>
 
