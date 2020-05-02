@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<robot name="donatello" xmlns:xacro="http://ros.org/wiki/xacro">
+
+<!-- SET ROBOT PARAMS-->
+<xacro:property name="PI" value="3.1415926535897931"/>
+
+<xacro:property name="chassisHeight" value="0.05"/>
+<xacro:property name="chassisLength" value="0.16"/>
+<xacro:property name="chassisWidth" value="0.14"/>
+<xacro:property name="chassisMass" value="50"/>
+
+<xacro:property name="casterRadius" value="0.025"/>
+<xacro:property name="casterMass" value="5"/>
+
+<xacro:property name="wheelWidth" value="0.015"/>
+<xacro:property name="wheelRadius" value="0.05"/>
+<xacro:property name="wheelPos" value="0.015"/>
+<xacro:property name="wheelMass" value="5"/>
+
+<xacro:property name="scanHeight" value="0.05"/>
+<xacro:property name="scanPos" value="0.015"/>
+
+
+<!-- INCLUDE FILES-->
+<xacro:include filename="$(find roberta_sim)/robots/donatello/urdf/robot.gazebo" />
+<xacro:include filename="$(find roberta_sim)/robots/donatello/urdf/materials.xacro" />
+<xacro:include filename="$(find roberta_sim)/robots/donatello/urdf/macros.xacro" />
+
+<link name="footprint" />
+
+<joint name="base_joint" type="fixed">
+  <parent link="footprint"/>
+  <child link="chassis"/>
+</joint>
+
+<link name='chassis'>
+  <collision> 
+    <origin xyz="0 0 ${wheelRadius}" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${chassisLength} ${chassisWidth} ${chassisHeight}"/> 
+    </geometry> 
+  </collision>
+  <visual> 
+    <origin xyz="0 0 ${wheelRadius}" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${chassisLength} ${chassisWidth} ${chassisHeight}"/> 
+    </geometry> 
+    <material name="orange"/>
+  </visual>
+  <inertial> 
+    <origin xyz="0 0 ${wheelRadius}" rpy="0 0 0"/> 
+    <mass value="${chassisMass}"/> 
+    <box_inertia m="${chassisMass}" x="${chassisLength}" y="${chassisWidth}" z="${chassisHeight}"/>
+  </inertial>
+</link>
+
+<joint name="caster_joint" type="fixed">
+  <parent link="chassis"/>
+  <child link="caster_wheel"/>
+</joint>
+
+<link name="caster_wheel">
+  <collision>
+    <origin xyz="${casterRadius-chassisLength/2} 0 ${casterRadius-chassisHeight+wheelRadius}" rpy="0 0 0"/>
+    <geometry>
+      <sphere radius="${casterRadius}"/>
+    </geometry>
+  </collision>
+  
+  <visual>
+    <origin xyz="${casterRadius-chassisLength/2} 0 ${casterRadius-chassisHeight+wheelRadius}" rpy="0 0 0"/>
+    <geometry>
+      <sphere radius="${casterRadius}"/>
+    </geometry>
+    <material name="red"/>
+  </visual>
+
+  <inertial>
+    <origin xyz="${casterRadius-chassisLength/2} 0 ${casterRadius-chassisHeight+wheelRadius}" rpy="0 0 0"/>
+    <mass value="${casterMass}"/>
+    <sphere_inertia m="${casterMass}" r="${casterRadius}"/>
+  </inertial>
+</link>
+
+<wheel lr="left" tY="1"/>
+<wheel lr="right" tY="-1"/>
+
+<joint name="scan_joint" type="fixed">
+  <parent link="chassis"/>
+  <child link="scan"/>
+  <origin xyz="${chassisLength/2-scanPos} 0 ${chassisHeight/2+wheelRadius+scanHeight/2}" rpy="0 0 0"/>
+</joint>
+
+<link name="scan">
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <cylinder length="${scanHeight}" radius="0.02"/>
+    </geometry>
+    <material name="blue"/>
+  </visual>
+  <visual>
+    <origin xyz="-0.02 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.04 0.04 ${scanHeight}"/>
+    </geometry>
+    <material name="blue"/>
+  </visual>
+
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <cylinder length="${scanHeight}" radius="0.02"/>
+    </geometry>
+  </collision>
+  <collision>
+    <origin xyz="-0.02 0 0.0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.04 0.04 ${scanHeight}"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <mass value="0.114" />
+    <origin xyz="0 0 0" />
+    <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+              iyy="0.001" iyz="0.0"
+              izz="0.001" />
+  </inertial>
+  
+</link>
+
+<joint name="imu_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+</joint>
+
+<link name="imu_link"/>
+
+</robot>
