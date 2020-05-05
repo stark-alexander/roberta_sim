@@ -34,11 +34,11 @@
   </collision>
 
   <visual>
-    <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+      <mesh filename="package://roberta_sim/robots/donatello/meshes/${lr}_tire.stl" scale="${wheelRadius*0.001/0.033} ${0.001*wheelWidth/0.018} ${0.001*wheelRadius/0.033}"/>
     </geometry>
-    <material name="black"/>
+    <material name="dark"/>
   </visual>
 
   <inertial>
@@ -54,7 +54,7 @@
   <kp  value="10000000.0" />
   <kd  value="1.0" />
   <fdir1 value="1 0 0"/>
-  <material>Gazebo/Black</material>
+  <material>Gazebo/FlatBlack</material>
 </gazebo>
 
 
