@@ -63,7 +63,7 @@
   <collision>
     <origin xyz="${casterRadius-chassisLength/2} 0 ${casterRadius-chassisHeight+wheelRadius}" rpy="0 0 0"/>
     <geometry>
-      <sphere radius="${casterRadius}"/>
+      <box size="${casterRadius*2} ${casterRadius*2} ${casterRadius*2}"/> 
     </geometry>
   </collision>
   
@@ -78,6 +78,7 @@
   <inertial>
     <origin xyz="${casterRadius-chassisLength/2} 0 ${casterRadius-chassisHeight+wheelRadius}" rpy="0 0 0"/>
     <mass value="${casterMass}"/>
+    <box_inertia m="${casterMass}" x="${casterRadius*2}" y="${casterRadius*2}" z="${casterRadius*2}"/>
     <sphere_inertia m="${casterMass}" r="${casterRadius}"/>
   </inertial>
 </link>
