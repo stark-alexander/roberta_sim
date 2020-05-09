@@ -7,15 +7,15 @@
 <xacro:property name="chassisHeight" value="0.05"/>
 <xacro:property name="chassisLength" value="0.16"/>
 <xacro:property name="chassisWidth" value="0.14"/>
-<xacro:property name="chassisMass" value="50"/>
+<xacro:property name="chassisMass" value="0.1"/>
 
 <xacro:property name="casterRadius" value="0.025"/>
-<xacro:property name="casterMass" value="5"/>
+<xacro:property name="casterMass" value="0.005"/>
 
 <xacro:property name="wheelWidth" value="0.015"/>
 <xacro:property name="wheelRadius" value="0.05"/>
 <xacro:property name="wheelPos" value="0.015"/>
-<xacro:property name="wheelMass" value="5"/>
+<xacro:property name="wheelMass" value="0.02"/>
 
 <xacro:property name="scanHeight" value="0.05"/>
 <xacro:property name="scanPos" value="0.015"/>
@@ -26,10 +26,10 @@
 <xacro:include filename="$(find roberta_sim)/robots/donatello/urdf/materials.xacro" />
 <xacro:include filename="$(find roberta_sim)/robots/donatello/urdf/macros.xacro" />
 
-<link name="footprint" />
+<link name="base_footprint" />
 
 <joint name="base_joint" type="fixed">
-  <parent link="footprint"/>
+  <parent link="base_footprint"/>
   <child link="chassis"/>
 </joint>
 
@@ -63,7 +63,7 @@
   <collision>
     <origin xyz="${casterRadius-chassisLength/2} 0 ${casterRadius-chassisHeight+wheelRadius}" rpy="0 0 0"/>
     <geometry>
-      <box size="${casterRadius*2} ${casterRadius*2} ${casterRadius*2}"/> 
+      <sphere radius="${casterRadius}"/>
     </geometry>
   </collision>
   
